@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/static/static.css">
+    <link rel="stylesheet" href="/css/music/music.css">  
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/resources/auth/properties.js"></script>
+    <script src="/js/static/static.js"></script>
+    <script src="/js/music/music.js"></script> 
+    <title>Music</title>
+</head>
+<body>
+    <header include-html="/html/static/header.html"></header>
+    <nav include-html="/html/static/nav.html"></nav>
+    <main>
+        <div class="music_search_div">
+            <div class="music_search_category">
+                <label class="music_input_label" for="input_movie_box_office_by_search_date">FLO Music 최신 100곡
+                    <select id="music_loacation_select" class="music_select" name="music_loacation_select" required="required">
+                        <option value="01">국내</option>
+                        <option value="02">해외</option>
+                    </select> 
+                </label>
+                <button type="button" onclick="getMusicNew100();">검색</button>
+            </div>
+        </div>
+        <div class="music_result_div">
+            
+        </div>
+    </main>
+    <footer include-html="/html/static/footer.html"></footer>
+</body>
+<script>
+    includeHTML();
+</script>
+</html>

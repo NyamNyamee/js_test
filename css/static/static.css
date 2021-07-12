@@ -36,11 +36,11 @@ footer > #footer_title {
 }
 .index_link {
     text-decoration: none;
-    color: skyblue;
+    color: cyan;
 }
 .index_link:visited {
     text-decoration: none;
-    color: royalblue;
+    color: skyblue;
 }
 .index_link:hover {
     color: turquoise;

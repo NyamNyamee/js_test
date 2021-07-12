@@ -1,19 +1,13 @@
-.movie_search_category {
+.music_search_category {
     margin: 10px;
 }
 
-.movie_result_table {
+.music_result_table {
     margin-top: 50px;
     border: 1px solid grey;
     text-align: center;
 }
-
-.movie_result_detail_table {
-    margin-top: 50px;
-    border: 1px solid grey;
-    text-align: center;
-}
-
+ 
 th {
     border-bottom: 2px solid grey;
     padding: 10px;
