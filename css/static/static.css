@@ -1,0 +1,51 @@
+body {
+    background:black;
+}
+header > #header_title {
+    color: white;
+    background:  dimgrey;
+    text-align:center;
+    width:1900px;
+    height:60px;
+    font-size:24pt;
+    position:fixed;
+    top:0;
+}
+nav {
+    position:static;
+    margin-top:80px;
+    color: springgreen;
+}
+main {
+    position:static;
+    margin-bottom:200px;
+    color: springgreen;
+}
+footer > #footer_title {
+    color:white;
+    background:dimgrey;
+    text-align:center;
+    width:1900px;
+    height:50px;
+    font-size:24pt;
+    position: fixed;
+    bottom:0;
+}
+.selected_page {
+    text-decoration: underline;
+}
+.index_link {
+    text-decoration: none;
+    color: skyblue;
+}
+.index_link:visited {
+    text-decoration: none;
+    color: royalblue;
+}
+.index_link:hover {
+    color: turquoise;
+}
+.nav_item_list > ul > li{
+    display: inline-block;
+    margin-right: 10pt;
+}

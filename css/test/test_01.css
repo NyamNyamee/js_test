@@ -1,0 +1,39 @@
+#new_div_01 {
+    color: rebeccapurple;
+    max-width: 500px; /* 이 속성 사용 시 브라우저 크기가 width보다 작아졌을 때 스크롤이 생기지 않는다. */
+    margin: 0 auto;
+}
+
+#new_div_02 {
+    width: 500px;
+    padding: 20px;
+    border-width: 15px;
+    border-style: dashed;
+    margin:30px;
+    box-sizing: border-box; /* 이 속성 사용 시 패딩, 보더의 너비를 포함해 전체 width 사이즈를 계산한다.(마진은 제외) */
+  }
+
+#fixed_button_01 {
+    /* 포지션 속성 */
+    /* position: static; */
+    /* position: relative; */
+    position: fixed;
+    /* position: absolute; */
+    /* position: sticky; */
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    height: 30px;
+}
+
+#new_div_03 {
+    float: right; /* 블럭을 인라인 느낌으로 */
+    width: 400px;
+    height: 100px;
+    margin: 1rem;
+}
+
+#new_div_04 {
+    clear: right; /* 이 속성 사용 시 float의 영향을 받지 않음 */
+}
+  
