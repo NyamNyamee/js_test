@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/static/static.css">
+    <link rel="stylesheet" href="/css/covid19/covid19.css">  
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/resources/auth/properties.js"></script>
+    <script src="/js/static/static.js"></script>
+    <script src="/js/covid19/covid19.js"></script> 
+    <title>Covid19</title>
+</head>
+<body>
+    <header include-html="/html/static/header.html"></header>
+    <nav include-html="/html/static/nav.html"></nav>
+    <main>
+        <div class="covid19_search_div">
+            <div class="covid19_search_category">
+                <label class="covid19_input_label" for="covid19_vaccine_center_by_search_address_input">예방접종센터 검색 지역명:
+                    <input type="text" id="covid19_vaccine_center_by_search_address_input" class="covid19_input" name="covid19_vaccine_center_by_search_address_input" placeHolder="미입력시 전체검색" required="required">
+                </label>
+                <button type="button" onclick="getVaccineCenterInfo();">검색</button>
+            </div>
+            <div class="covid19_search_category">
+                <label class="covid19_input_label" for="covid19_national_issue_by_search_nation_input">국가별 코로나 이슈 검색 국가명:
+                    <input type="text" id="covid19_national_issue_by_search_nation_input" class="covid19_input" name="covid19_national_issue_by_search_nation_input" required="required">
+                </label>
+                <button type="button" onclick="getNationalIssueInfo();">검색</button>
+            </div>
+        </div>
+        <div class="covid19_result_div">
+            
+        </div>
+    </main>
+    <footer include-html="/html/static/footer.html"></footer>
+</body>
+<script>
+    includeHTML();
+</script>
+</html>

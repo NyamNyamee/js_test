@@ -37,7 +37,7 @@ async function getMusicNew100() {
         music_result_div.appendChild(music_result_table);
         
         // 테이블 컬럼명 배열 생성, th태그 생성
-        let th_tag_values = ['번호', '곡명', '아티스트', '출시일', '장르', '앨범명'];
+        let th_tag_values = ['번호', '곡명', '아티스트', '발매일', '장르', '앨범명'];
         th_tag_values.forEach((th_tag_value) => {
             music_result_table_th = document.createElement('th');
             music_result_table_th_text = document.createTextNode(th_tag_value);
@@ -55,7 +55,7 @@ async function getMusicNew100() {
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[FLO Music 최신 100곡 정보 응답] ${response}`)
+        console.log(`[FLO Music 최신 100곡 정보 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_data = response.data.data.list;

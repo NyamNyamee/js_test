@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/static/static.css">
+    <link rel="stylesheet" href="/css/weather/weather.css">  
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/resources/auth/properties.js"></script>
+    <script src="/js/static/static.js"></script>
+    <script src="/js/weather/weather.js"></script> 
+    <title>Weather</title>
+</head>
+<body>
+    <header include-html="/html/static/header.html"></header>
+    <nav include-html="/html/static/nav.html"></nav>
+    <main>
+        <div class="weather_search_div">
+            <div class="weather_search_category">
+                <label class="weather_input_label" for="weather_by_search_date_input">지난 날씨 검색 날짜:
+                    <input type="date" id="weather_by_search_date_input" class="weather_input" name="weather_by_search_date_input" required="required">
+                </label>
+                <button type="button" onclick="getPastWeatherInfo();">검색</button>
+            </div>
+        </div>
+        <div class="weather_result_div">
+            
+        </div>
+    </main>
+    <footer include-html="/html/static/footer.html"></footer>
+</body>
+<script>
+    includeHTML();
+</script>
+</html>

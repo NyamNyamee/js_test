@@ -1,0 +1,26 @@
+.covid19_search_category {
+    margin: 10px;
+}
+
+.covid19_result_table {
+    margin-top: 50px;
+    border: 1px solid grey;
+    text-align: center;
+}
+ 
+.covid19_issue_detail_div {
+    padding: 20px;
+    border: 1px solid grey;
+    margin-top: 50px;
+    text-align: center;
+}
+
+th {
+    border-bottom: 2px solid grey;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px dotted grey;
+}

@@ -83,7 +83,7 @@ async function includeHTML(callback) {
           tag.innerHTML = "Page not found (404)";
         }
 
-        
+
       }
     }
   } catch (error) {
@@ -106,7 +106,7 @@ async function transmitAndReceive(host, path, query, header, data, method) {
       throw new Error(`${method} 방식으로 요청할 수 없습니다.`)
     }
 
-    console.log(`[Axios 송수신 응답] ${response}`);
+    console.log(`[Axios 송수신 응답]`, response);
 
     // 요청 성공 여부에 따라 처리
     if (response.request.readyState == 4 && response.request.status == 200) {

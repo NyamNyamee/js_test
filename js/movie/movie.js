@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let yyyy = today.getFullYear(); // 연도
         let mm = today.getMonth() + 1; // 1월이 0임
-        let dd = today.getDate() - 1; // 오늘 일자 - 1
+        let dd = today.getDate(); // 오늘 일자
 
         // input type date의 맥스날짜를 (오늘-1)일 로 설정 
         // 월이 한자리수 일 때
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // 어제 날짜
-        let yesterday = yyyy + '-' + mm + '-' + dd;
+        let yesterday = yyyy + '-' + mm + '-' + (dd - 1);
 
         // 날짜 input 태그의 기본값 설정, max 속성값 설정
         let input_movie_box_office_by_search_date = document.getElementById('input_movie_box_office_by_search_date')
@@ -96,10 +96,22 @@ async function getBoxOfficeInfo() {
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[한국영화진흥위원회 KOFIC 박스오피스정보 응답] ${response}`)
+        console.log(`[한국영화진흥위원회 KOFIC 박스오피스정보 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_data = response.data.boxOfficeResult.dailyBoxOfficeList;
+        // 데이터가 비어있으면
+        if (list_data.length === 0) {
+            movie_result_table_tr = document.createElement('tr');
+            movie_result_table_td = document.createElement('td');
+            movie_result_table_td.setAttribute('colspan', th_tag_values.length)
+            movie_result_table_td_text = document.createTextNode('정보 없음');
+            movie_result_table_td.appendChild(movie_result_table_td_text);
+            movie_result_table_tr.appendChild(movie_result_table_td);
+            movie_result_table.appendChild(movie_result_table_tr);
+            return;
+        }
+        // 데이터가 존재하면
         list_data.forEach(element => {
             let movie_rank = element.rank;
             let movie_name = element.movieNm; 
@@ -187,10 +199,22 @@ async function getMovieInfo() {
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[한국영화진흥위원회 KOFIC 영화제목검색 응답] ${response}`)
+        console.log(`[한국영화진흥위원회 KOFIC 영화제목검색 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_data = response.data.movieListResult.movieList;
+        // 데이터가 비어있으면
+        if (list_data.length === 0) {
+            movie_result_table_tr = document.createElement('tr');
+            movie_result_table_td = document.createElement('td');
+            movie_result_table_td.setAttribute('colspan', th_tag_values.length)
+            movie_result_table_td_text = document.createTextNode('정보 없음');
+            movie_result_table_td.appendChild(movie_result_table_td_text);
+            movie_result_table_tr.appendChild(movie_result_table_td);
+            movie_result_table.appendChild(movie_result_table_tr);
+            return;
+        }
+        // 데이터가 존재하면
         list_data.forEach((element, index) => {
             let movie_index = index + 1;
             let movie_code = element.movieCd;
@@ -281,7 +305,7 @@ async function getMovieDetailInfo(movie_code) {
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[한국영화진흥위원회 KOFIC 영화상세정보검색 응답] ${response}`)
+        console.log(`[한국영화진흥위원회 KOFIC 영화상세정보검색 응답] `, response)
 
 
         // 응답 데이터를 결과테이블에 입력
@@ -319,6 +343,11 @@ async function getMoviePersonInfo() {
         // 검색제목 input값 받아오기, 유효성 검사
         let input_movie_person_by_person_name = document.getElementById('input_movie_person_by_person_name');
         let input_movie_person_by_person_name_value = input_movie_person_by_person_name.value.trim();
+
+        if (input_movie_person_by_person_name_value === null || input_movie_person_by_person_name_value === '') {
+            alert('공백은 입력할 수 없습니다');
+            return;
+        }
 
         // 결과가 나타날 div
         let movie_result_div = document.querySelector('div.movie_result_div');
@@ -366,10 +395,22 @@ async function getMoviePersonInfo() {
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[한국영화진흥위원회 KOFIC 영화인검색정보 응답] ${response}`)
+        console.log(`[한국영화진흥위원회 KOFIC 영화인검색정보 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_data = response.data.peopleListResult.peopleList;
+        // 데이터가 비어있으면
+        if (list_data.length === 0) {
+            movie_result_table_tr = document.createElement('tr');
+            movie_result_table_td = document.createElement('td');
+            movie_result_table_td.setAttribute('colspan', th_tag_values.length)
+            movie_result_table_td_text = document.createTextNode('정보 없음');
+            movie_result_table_td.appendChild(movie_result_table_td_text);
+            movie_result_table_tr.appendChild(movie_result_table_td);
+            movie_result_table.appendChild(movie_result_table_tr);
+            return;
+        }
+        // 데이터가 존재하면
         list_data.forEach((element, index) => {
             let movie_index = index + 1;
             let movie_people_name_kor = element.peopleNm;
