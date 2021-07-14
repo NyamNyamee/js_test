@@ -11,6 +11,7 @@
 // function_01(1, 2);
 // console.log('text');
 
+
 /*
     이벤트 버블링, 이벤트 캡쳐, 위임, 전파방지
 */
@@ -46,6 +47,7 @@
 //     var itemList = document.querySelector('.itemList');
 //     itemList.addEventListener('click', logEvent);
 // });
+
 
 /*
     변수 선언 방식 var(function scope), let(block scope), const(block scope)
@@ -86,6 +88,7 @@
 // console.log(foo); // 123
 // console.log(bar); // ReferenceError: bar is not defined
 
+
 /*
     호이스팅 예제) 아래 3줄 실행 시, 실제로 그 아래 4줄처럼 실행된다. var는 호이스팅되지만 let은 안됨
  */
@@ -98,21 +101,51 @@
 // varVariable = "one";
 // let letVariable = "two";
 
-function func1() {
-    for (let i = 0; i < 3; i++) {
-        setTimeout(() => {
-            console.log(i);
-        }, 2000);
-    }
-}
-// func1();
 
-function func2() {
-    var i = 0;
-    var stop = setInterval(() => {
-        console.log(i);
-        i++;
-    }, 2000);
-}
+/*
+    setTimeout, setInterval 테스트
+ */
+// function func1() {
+//     for (let i = 0; i < 3; i++) {
+//         setTimeout(() => {
+//             console.log(i);
+//         }, 2000);
+//     }
+// }
+// // func1();
 
-func2();
+// function func2() {
+//     var i = 0;
+//     var stop = setInterval(() => {
+//         console.log(i);
+//         i++;
+//     }, 2000);
+// }
+
+// func2();
+
+
+/*
+    switch case 테스트
+ */
+// let i = 1;
+
+// switch (i) {
+//     case 1:
+//         console.log('1: ', i);
+//         break;
+//     case 2:
+//         console.log('2: ', i);
+//     case 3:
+//         console.log('3: ', i);
+//     default:
+//         console.log('없음');
+// }
+
+/*
+    ES6 `백틱` 테스트
+ */
+let str = '01';
+let str2 = '02';
+let num = `${str + str2}`;
+console.log(num);
