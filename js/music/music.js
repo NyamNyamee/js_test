@@ -48,14 +48,14 @@ async function getMusicNew100() {
         // API 요청
         let host = `https://www.music-flo.com`;
         let path = `/api/meta/v1/track/${music_loacation_select_value}/new`;
-        let query = `?page=1&size=100`
+        let query = `?page=1&size=100`;
         let header = ``;
         let data = ``;
         let method = `GET`;
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[FLO Music 최신 100곡 정보 응답] `, response)
+        // console.log(`[FLO Music 최신 100곡 정보 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_data = response.data.data.list;

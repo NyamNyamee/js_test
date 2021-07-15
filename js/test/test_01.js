@@ -142,10 +142,33 @@
 //         console.log('없음');
 // }
 
+
 /*
     ES6 `백틱` 테스트
  */
-let str = '01';
-let str2 = '02';
-let num = `${str + str2}`;
-console.log(num);
+// let str = '01';
+// let str2 = '02';
+// let num = `${str + str2}`;
+// console.log(num);
+
+
+/*
+    가변인자 테스트
+ */
+// function sum() {
+//     let res = 0;
+//     console.log(arguments);
+//     console.log(typeof(arguments));
+//     for (let i = 0; i < arguments.length; i++) {
+//         res += arguments[i];
+//     }
+//     return res;
+// }
+// console.log(sum(2, 3, 4, 5));
+
+// let obj_01 = { '0': 2, '1': 3, '2': 4, '3': 5 };
+// for(obj in obj_01){
+//     console.log(obj);
+//     console.log(obj_01[obj]);
+//     console.log('---')
+// }

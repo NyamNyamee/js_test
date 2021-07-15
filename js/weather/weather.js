@@ -78,14 +78,14 @@ async function getPastWeatherInfo() {
         // API 요청
         let host = `http://cors-anywhere.herokuapp.com/http://apis.data.go.kr`; /* CORS 에러떄문에 클라이언트에서 API서버로 바로 요청보낼 수 없어서 중간에 프록시서버를 거쳐 요청하도록 변경 */
         let path = `/1360000/AsosHourlyInfoService/getWthrDataList`;
-        let query = `?serviceKey=${DATA_GOV_KEY}&pageNo=1&numOfRows=100&dataType=JSON&dataCd=ASOS&dateCd=HR&startDt=${weather_by_search_date_input_value}&startHh=01&endDt=${parseInt(weather_by_search_date_input_value) + 1}&endHh=23&stnIds=${weather_by_search_station_value}`
+        let query = `?serviceKey=${DATA_GOV_KEY}&pageNo=1&numOfRows=100&dataType=JSON&dataCd=ASOS&dateCd=HR&startDt=${weather_by_search_date_input_value}&startHh=01&endDt=${parseInt(weather_by_search_date_input_value) + 1}&endHh=23&stnIds=${weather_by_search_station_value}`;
         let header = ``;
         let data = ``;
         let method = `GET`;
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[공공데이터포털] 지난 날씨정보 응답] `, response)
+        // console.log(`[공공데이터포털] 지난 날씨정보 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_data = response.data.response.body.items.item;

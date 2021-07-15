@@ -92,16 +92,29 @@ async function includeHTML(callback) {
 }
 
 /* [Axios] rest api 요청 */
-async function transmitAndReceive(host, path, query, header, data, method) {
+async function transmitAndReceive(host, path, query, headers, data, method) {
   try {
     const url = host + path + query;
     let response = "";
 
     if (method === "GET") {
-      response = await axios.get(url);
+      response = await axios({
+        url,
+        method,
+        headers
+      });
     }
     else if (method === "POST") {
-      response = await axios.post(url);
+      response = await axios({
+        url,
+        data,
+        method,
+        auth: {
+          username: data.get('client_id'),
+          password: data.get('client_secret')
+        },
+        headers
+      });
     } else {
       throw new Error(`${method} 방식으로 요청할 수 없습니다.`)
     }
@@ -116,5 +129,17 @@ async function transmitAndReceive(host, path, query, header, data, method) {
     }
   } catch (error) {
     console.error(`[Axios 송수신 에러] ${error}`);
+  }
+}
+
+/* (파라미터1) 하위에 있는 table태그를 (파라미터2)개 만큼만 남기고 모두 제거 */
+function removeResultTables(category_result_div, amount_to_remain) {
+  let category_result_tables = category_result_div.querySelectorAll('table');
+  let category_result_tables_length = category_result_tables.length;
+  
+  if (category_result_tables_length > 0) {
+      for (let i = amount_to_remain; i < category_result_tables_length; i++) {
+          category_result_div.removeChild(category_result_tables[i]);
+      }
   }
 }

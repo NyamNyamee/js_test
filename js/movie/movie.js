@@ -89,14 +89,14 @@ async function getBoxOfficeInfo() {
         // API 요청
         let host = `http://www.kobis.or.kr`;
         let path = `/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json`;
-        let query = `?key=${KOFIC_KEY}&targetDt=${input_movie_box_office_by_search_date_value}`
+        let query = `?key=${KOFIC_KEY}&targetDt=${input_movie_box_office_by_search_date_value}`;
         let header = ``;
         let data = ``;
         let method = `GET`;
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[한국영화진흥위원회 KOFIC 박스오피스정보 응답] `, response)
+        // console.log(`[한국영화진흥위원회 KOFIC 박스오피스정보 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_data = response.data.boxOfficeResult.dailyBoxOfficeList;
@@ -192,14 +192,14 @@ async function getMovieInfo() {
         // API 요청
         let host = `http://www.kobis.or.kr`;
         let path = `/kobisopenapi/webservice/rest/movie/searchMovieList.json`;
-        let query = `?key=${KOFIC_KEY}&movieNm=${input_movie_list_result_by_movie_name_value}`
+        let query = `?key=${KOFIC_KEY}&movieNm=${input_movie_list_result_by_movie_name_value}`;
         let header = ``;
         let data = ``;
         let method = `GET`;
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[한국영화진흥위원회 KOFIC 영화제목검색 응답] `, response)
+        // console.log(`[한국영화진흥위원회 KOFIC 영화제목검색 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_data = response.data.movieListResult.movieList;
@@ -298,14 +298,14 @@ async function getMovieDetailInfo(movie_code) {
         // API 요청
         let host = `http://www.kobis.or.kr`;
         let path = `/kobisopenapi/webservice/rest/movie/searchMovieInfo.json`;
-        let query = `?key=${KOFIC_KEY}&movieCd=${movie_code}`
+        let query = `?key=${KOFIC_KEY}&movieCd=${movie_code}`;
         let header = ``;
         let data = ``;
         let method = `GET`;
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[한국영화진흥위원회 KOFIC 영화상세정보검색 응답] `, response)
+        // console.log(`[한국영화진흥위원회 KOFIC 영화상세정보검색 응답] `, response)
 
 
         // 응답 데이터를 결과테이블에 입력
@@ -337,7 +337,7 @@ async function getMovieDetailInfo(movie_code) {
     }
 }
 
-/* 클릭한 영화의 영화코드 가져와서 영화 상세정보 뿌려주기 */
+/* 영화인 input값 가져와서 영화 상세정보 뿌려주기 */
 async function getMoviePersonInfo() {
     try {
         // 검색제목 input값 받아오기, 유효성 검사

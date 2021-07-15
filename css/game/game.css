@@ -1,8 +1,16 @@
 .game_search_category {
-    margin: 10px;
+    margin: 5px;
 }
 
-.game_result_table {
+.game_select {
+    margin: 5px;
+}
+
+.game_content_select {
+    margin: 5px;
+}
+
+.game_result_table, .game_result_hero_table, .game_result_hero_detail_table {
     margin-top: 50px;
     border: 1px solid grey;
     text-align: center;
