@@ -31,20 +31,25 @@ footer > #footer_title {
     position: fixed;
     bottom:0;
 }
-.selected_page {
-    text-decoration: underline;
-}
+
 .index_link {
     text-decoration: none;
     color: cyan;
 }
+
 .index_link:visited {
     text-decoration: none;
     color: skyblue;
 }
+
 .index_link:hover {
     color: turquoise;
 }
+
+.selected_page {
+    text-decoration: underline;
+}
+
 .nav_item_list > ul > li{
     display: inline-block;
     margin-right: 10pt;

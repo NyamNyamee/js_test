@@ -1,13 +1,6 @@
 /* 페이지 로드 시 */
 document.addEventListener("DOMContentLoaded", function () {
-  // 선택된 카테고리 속성 세팅. axios로 nav를 불러오기 전에 호출해버려서 실패
-  let linked_index_list = document.querySelectorAll("a.linked_index");
-  for (i = 0; i < linked_index_list.length; i++) {
-    if (linked_index_list[i].innerText === document.title) {
-      linked_index_list[i].classList.add('selected_page');
-      break;
-    }
-  }
+
 });
 
 /* 각 화면에서 공통으로 사용하는 html(header, nav, footer 등)을 include하기 위한 함수 */
@@ -53,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // }
 
 // 방법2. Axios사용(cdn 추가해야함)
-async function includeHTML(callback) {
+async function includeHTML() {
   try {
     var tags, i, tag, file, xhr;
     // 모든 태그 배열
@@ -82,8 +75,15 @@ async function includeHTML(callback) {
         } else {
           tag.innerHTML = "Page not found (404)";
         }
+      }
+    }
 
-
+    // 선택된 페이지의 nav 속성 세팅
+    let list_index_link = document.querySelectorAll(".index_link");
+    for (i = 0; i < list_index_link.length; i++) {
+      if (list_index_link[i].innerText === document.title) {
+        list_index_link[i].classList.add('selected_page');
+        break;
       }
     }
   } catch (error) {
@@ -95,7 +95,8 @@ async function includeHTML(callback) {
 async function transmitAndReceive(host, path, query, headers, data, method) {
   try {
     const url = host + path + query;
-    let response = "";
+    let response = ``;
+    let error_message = ``;
 
     if (method === "GET") {
       response = await axios({
@@ -128,7 +129,9 @@ async function transmitAndReceive(host, path, query, headers, data, method) {
       return `[Axios 송수신 실패] ${response.request.status}`;
     }
   } catch (error) {
-    console.error(`[Axios 송수신 에러] ${error}`);
+    error_message = `[Axios 송수신 에러] ${error}`;
+    console.error(error_message);
+    return error_message;
   }
 }
 
@@ -136,7 +139,7 @@ async function transmitAndReceive(host, path, query, headers, data, method) {
 function removeResultTables(category_result_div, amount_to_remain) {
   let category_result_tables = category_result_div.querySelectorAll('table');
   let category_result_tables_length = category_result_tables.length;
-  
+
   if (category_result_tables_length > 0) {
       for (let i = amount_to_remain; i < category_result_tables_length; i++) {
           category_result_div.removeChild(category_result_tables[i]);

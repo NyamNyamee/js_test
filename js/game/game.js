@@ -1,7 +1,9 @@
 /* 페이지 로딩 시 */
 document.addEventListener("DOMContentLoaded", function () {
     try {
-
+        // 메뉴에 포커스
+        let game_menu_select = document.getElementById('game_menu_select');
+        game_menu_select.focus();
     } catch (error) {
         console.error(error);
     }
@@ -93,7 +95,7 @@ function selectGameMenu() {
                             game_input_label.removeChild(game_content_search_input);
                             game_input_label.removeChild(game_content_search_button);
                         }
-                        removeResultTables(game_result_div, 0);                        break;
+                        removeResultTables(game_result_div, 0); break;
                     // Steam_게임조회
                     case '01':
                         game_content_search_input = document.createElement('input');
@@ -151,7 +153,7 @@ function selectGameMenu() {
                             game_input_label.removeChild(game_content_search_input);
                             game_input_label.removeChild(game_content_search_button);
                         }
-                        removeResultTables(game_result_div, 0);                        break;
+                        removeResultTables(game_result_div, 0); break;
                     // Blizzard_daiblo3
                     case '01':
                         game_content_select = document.createElement('select');
@@ -414,7 +416,12 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
     // 사용자가 입력한 값(배틀태그)
     let game_content_search_input_value = game_content_search_input.value;
     // 배틀태그 유효성검사 (중간에 '#' 포함되어있어야함, # 앞뒤로 공백이면 안됨)
-    // Todo. 2021-07-15
+    let reg_ex = /\S#\d/; // 공백이 아님, #포함, 숫자
+    let test_result = reg_ex.test(game_content_search_input_value);
+    if (!test_result) {
+        alert('닉네임#숫자 형식의 배틀태그로 검색해 주세요');
+        return;
+    }
 
     // 실제 요청할 url에서는 #을 %23으로 대체해야 함(인코딩문제?)
     game_content_search_input_value = game_content_search_input_value.replace('#', '%23');
@@ -436,9 +443,14 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
 
         const response = await transmitAndReceive(host, path, query, headers, data, method)
 
-        blizzard_access_token = response.data.access_token;
+        // console.log(`[Blizzard Diablo3 토큰요청 응답] `, response)
+        // 응답이 객체가 아닌 문자열(에러메시지)이라면 알림창 띄우고 리턴
+        if (typeof (response) === 'string') {
+            alert(response);
+            return;
+        }
 
-        console.log(`[Blizzard Diablo3 토큰요청 응답] `, response)
+        blizzard_access_token = response.data.access_token;
     } catch (error) {
         console.log(`[Blizzard Diablo3 토큰요청 에러] `, error)
         return;
@@ -449,23 +461,8 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
         // 결과가 나타날 div
         let game_result_div = document.querySelector('div.game_result_div');
 
-        // table 태그를 찾아보고 있으면 해당 태그 제거
-        let game_result_table = document.querySelector('table.game_result_table');
-        if (game_result_table != null) {
-            game_result_div.removeChild(game_result_table);
-        }
-
-        // hero_table 태그를 찾아보고 있으면 해당 태그 제거
-        let game_result_hero_table = document.querySelector('table.game_result_hero_table');
-        if (game_result_hero_table != null) {
-            game_result_div.removeChild(game_result_hero_table);
-        }
-
-        // hero_table 태그를 찾아보고 있으면 해당 태그 제거
-        let game_result_hero_detail_table = document.querySelector('table.game_result_hero_detail_table');
-        if (game_result_hero_detail_table != null) {
-            game_result_div.removeChild(game_result_hero_detail_table);
-        }
+        // 테이블 모두 제거
+        removeResultTables(game_result_div, 0);
 
         // 생성할 태그 초기화
         let game_result_table_th = ``;
@@ -500,7 +497,13 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
 
         const response = await transmitAndReceive(host, path, query, headers, data, method)
 
-        console.log(`[Blizzard Diablo3 프로필조회 응답] `, response)
+        // console.log(`[Blizzard Diablo3 프로필조회 응답] `, response)
+
+        // 응답이 객체가 아닌 문자열(에러메시지)이라면 알림창 띄우고 리턴
+        if (typeof (response) === 'string') {
+            alert(response);
+            return;
+        }
 
         // 응답 데이터를 결과테이블에 입력
         let object_data = response.data;
@@ -534,6 +537,7 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
         let game_result_hero_table_tr = ``;
         let game_result_hero_table_td = ``;
         let game_result_hero_table_td_text = ``;
+        let game_result_hero_table_td_a = ``;
 
         // table 태그 생성
         game_result_hero_table = document.createElement('table');
@@ -590,23 +594,23 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
 
 // Blizzard_Diablo3_영웅상세정보
 async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizzard_access_token) {
+    // 배틀태그의 #을 %23으로 대체
     game_content_search_input_value = game_content_search_input_value.replace('#', '%23');
     try {
         // 결과가 나타날 div
         let game_result_div = document.querySelector('div.game_result_div');
 
-        // hero_detail_table 태그를 찾아보고 있으면 해당 태그 제거
-        let game_result_hero_detail_table = document.querySelector('table.game_result_hero_detail_table');
-        if (game_result_hero_detail_table != null) {
-            game_result_div.removeChild(game_result_hero_detail_table);
-        }
+        // 테이블 두개남기고 모두 제거
+        removeResultTables(game_result_div, 2);
 
         // 생성할 태그 초기화
+        let game_result_hero_detail_table = ``;
         let game_result_hero_detail_table_th = ``;
         let game_result_hero_detail_table_th_text = ``;
         let game_result_hero_detail_table_tr = ``;
         let game_result_hero_detail_table_td = ``;
         let game_result_hero_detail_table_td_text = ``;
+        let game_result_hero_detail_table_td_img = ``;
 
         // API 요청
         let host = `https://${BLIZZARD_REGION}.api.blizzard.com`;
@@ -620,7 +624,7 @@ async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizz
 
         const response = await transmitAndReceive(host, path, query, headers, data, method)
 
-        console.log(`[Blizzard Diablo3 영웅상세정보 응답] `, response)
+        // console.log(`[Blizzard Diablo3 영웅상세정보 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_active_skills_data = response.data.skills.active;
@@ -631,11 +635,16 @@ async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizz
         let object_stats_keys_data_array = Object.keys(object_stats_data);
         let object_stats_values_data_array = Object.values(object_stats_data);
 
+        // 아이콘 접두, 접미사 (url, 확장자)
+        let icon_url_prefix_skill = 'http://media.blizzard.com/d3/icons/skills/64/';
+        let icon_url_suffix_skill = '.png';
+        let icon_url_prefix_item = 'http://media.blizzard.com/d3/icons/items/large/';
+        let icon_url_suffix_item = '.png';
+
         // stat 테이블
         // table 태그 생성
         game_result_hero_detail_table = document.createElement('table');
-        game_result_hero_detail_table.classList.add('game_result_hero_detail_table');
-        game_result_div.appendChild(game_result_hero_detail_table);
+        game_result_hero_detail_table.classList.add('game_result_hero_detail_stat_table');
 
         //  테이블 컬럼명 배열: th태그 생성
         object_stats_keys_data_array.forEach((object_stats_key) => {
@@ -644,7 +653,7 @@ async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizz
             game_result_hero_detail_table_th.appendChild(game_result_hero_detail_table_th_text);
             game_result_hero_detail_table.appendChild(game_result_hero_detail_table_th);
         });
-        
+
         // tr생성
         game_result_hero_detail_table_tr = document.createElement('tr');
 
@@ -659,11 +668,192 @@ async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizz
         // 테이블에 붙이기
         game_result_hero_detail_table.appendChild(game_result_hero_detail_table_tr);
 
-        // 스킬/아이템 테이블? 생성
-        // Todo. 2021-07-15
+        // div에 붙이기
+        game_result_div.appendChild(game_result_hero_detail_table);
 
+        // active_skill 테이블
+        // table 태그 생성
+        game_result_hero_detail_table = document.createElement('table');
+        game_result_hero_detail_table.classList.add('game_result_hero_detail_skill_table');
+
+        // 테이블 컬럼명 배열 생성, th태그 생성
+        let hero_active_skill_th_tag_values = ['스킬명(한글)', '레벨', '아이콘'];
+        hero_active_skill_th_tag_values.forEach((hero_active_skill_th_tag_value) => {
+            game_result_hero_detail_table_th = document.createElement('th');
+            game_result_hero_detail_table_th_text = document.createTextNode(hero_active_skill_th_tag_value);
+            game_result_hero_detail_table_th.appendChild(game_result_hero_detail_table_th_text);
+            game_result_hero_detail_table.appendChild(game_result_hero_detail_table_th);
+        });
+
+        // 응답 데이터를 결과테이블에 입력
+        list_active_skills_data.forEach(element => {
+            let hero_active_skill_slug = element.skill.slug;
+            let hero_active_skill_name = element.skill.name;
+            let hero_active_skill_level = element.skill.level;
+            let hero_active_skill_icon = element.skill.icon;
+            let hero_active_skill_description = element.skill.description;
+
+            hero_active_skill_slug = `${hero_active_skill_slug} (${hero_active_skill_name})`;
+            // tr생성
+            game_result_hero_detail_table_tr = document.createElement('tr');
+
+            // 테이블 내용 생성, 테이블에 붙이기
+            let hero_active_skill_td_tag_values = [hero_active_skill_slug, hero_active_skill_level, hero_active_skill_icon];
+            hero_active_skill_td_tag_values.forEach((hero_active_skill_td_tag_value, index) => {
+                game_result_hero_detail_table_td = document.createElement('td');
+                // 데이터가 아이콘일때, 아닐 때 구분
+                if (index === 2) {
+                    hero_active_skill_td_tag_value = icon_url_prefix_skill + hero_active_skill_td_tag_value + icon_url_suffix_skill;
+                    game_result_hero_detail_table_td_img = document.createElement('img');
+                    game_result_hero_detail_table_td_img.setAttribute('src', hero_active_skill_td_tag_value);
+                    game_result_hero_detail_table_td_img.setAttribute('alt', '미확인');
+                    game_result_hero_detail_table_td_img.setAttribute('title', hero_active_skill_description);
+                    game_result_hero_detail_table_td.appendChild(game_result_hero_detail_table_td_img);
+                } else {
+                    game_result_hero_detail_table_td_text = document.createTextNode(hero_active_skill_td_tag_value);
+                    game_result_hero_detail_table_td.appendChild(game_result_hero_detail_table_td_text);
+                }
+                game_result_hero_detail_table_tr.appendChild(game_result_hero_detail_table_td);
+                game_result_hero_detail_table.appendChild(game_result_hero_detail_table_tr);
+            });
+
+            // 테이블에 붙이기
+            game_result_div.appendChild(game_result_hero_detail_table);
+        });
+
+        // div에 붙이기
+        game_result_div.appendChild(game_result_hero_detail_table);
+
+        // passive_skill 테이블
+        // table 태그 생성
+        game_result_hero_detail_table = document.createElement('table');
+        game_result_hero_detail_table.classList.add('game_result_hero_detail_skill_table');
+
+        // 테이블 컬럼명 배열 생성, th태그 생성
+        let hero_passive_skill_th_tag_values = ['스킬명 (한글)', '레벨', '아이콘'];
+        hero_passive_skill_th_tag_values.forEach((hero_passive_skill_th_tag_value) => {
+            game_result_hero_detail_table_th = document.createElement('th');
+            game_result_hero_detail_table_th_text = document.createTextNode(hero_passive_skill_th_tag_value);
+            game_result_hero_detail_table_th.appendChild(game_result_hero_detail_table_th_text);
+            game_result_hero_detail_table.appendChild(game_result_hero_detail_table_th);
+        });
+
+        // 응답 데이터를 결과테이블에 입력
+        list_passive_skills_data.forEach(element => {
+            let hero_passive_skill_slug = element.skill.slug;
+            let hero_passive_skill_name = element.skill.name;
+            let hero_passive_skill_level = element.skill.level;
+            let hero_passive_skill_icon = element.skill.icon;
+            let hero_passive_skill_description = element.skill.description;
+
+            hero_passive_skill_slug = `${hero_passive_skill_slug} (${hero_passive_skill_name})`;
+
+            // tr생성
+            game_result_hero_detail_table_tr = document.createElement('tr');
+
+            // 테이블 내용 생성, 테이블에 붙이기
+            let hero_passive_skill_td_tag_values = [hero_passive_skill_slug, hero_passive_skill_level, hero_passive_skill_icon];
+            hero_passive_skill_td_tag_values.forEach((hero_passive_skill_td_tag_value, index) => {
+                game_result_hero_detail_table_td = document.createElement('td');
+                // 데이터가 아이콘일때, 아닐 때 구분
+                if (index === 2) {
+                    hero_passive_skill_td_tag_value = icon_url_prefix_skill + hero_passive_skill_td_tag_value + icon_url_suffix_skill;
+                    game_result_hero_detail_table_td_img = document.createElement('img');
+                    game_result_hero_detail_table_td_img.setAttribute('src', hero_passive_skill_td_tag_value);
+                    game_result_hero_detail_table_td_img.setAttribute('alt', '미확인');
+                    game_result_hero_detail_table_td_img.setAttribute('title', hero_passive_skill_description);
+                    game_result_hero_detail_table_td.appendChild(game_result_hero_detail_table_td_img);
+                } else {
+                    game_result_hero_detail_table_td_text = document.createTextNode(hero_passive_skill_td_tag_value);
+                    game_result_hero_detail_table_td.appendChild(game_result_hero_detail_table_td_text);
+                }
+                game_result_hero_detail_table_tr.appendChild(game_result_hero_detail_table_td);
+                game_result_hero_detail_table.appendChild(game_result_hero_detail_table_tr);
+            });
+
+            // 테이블에 붙이기
+            game_result_div.appendChild(game_result_hero_detail_table);
+        });
+
+        // div에 붙이기
+        game_result_div.appendChild(game_result_hero_detail_table);
+
+        // item 테이블
+        // table 태그 생성
+        game_result_hero_detail_table = document.createElement('table');
+        game_result_hero_detail_table.classList.add('game_result_hero_detail_item_table');
+
+        // 보여줄 데이터 초기화
+        let hero_item_name = ``;
+        let hero_item_icon = ``;
+        let hero_item_color = ``;
+
+        for (object_item_data in object_items_data) {
+            // head일 때
+            if (object_item_data === 'head') {
+                hero_item_name = object_items_data[object_item_data].name;
+                hero_item_icon = object_items_data[object_item_data].icon;
+                hero_item_color = object_items_data[object_item_data].displayColor;
+
+                hero_item_icon = icon_url_prefix_item + hero_item_icon + icon_url_suffix_item;
+
+                game_result_hero_detail_table_tr = document.createElement('tr');
+                game_result_hero_detail_table_td = document.createElement('td');
+                game_result_hero_detail_table_td_img = document.createElement('img');
+
+                game_result_hero_detail_table_td_img.setAttribute('src', hero_item_icon);
+                game_result_hero_detail_table_td_img.setAttribute('alt', '미확인');
+                game_result_hero_detail_table_td_img.setAttribute('title', hero_item_name);
+
+                game_result_hero_detail_table_td.classList.add(`item_grade_color_${hero_item_color}`);
+                game_result_hero_detail_table_td.setAttribute('colspan', 3);
+                game_result_hero_detail_table_td.appendChild(game_result_hero_detail_table_td_img);
+                game_result_hero_detail_table_tr.appendChild(game_result_hero_detail_table_td);
+                game_result_hero_detail_table.appendChild(game_result_hero_detail_table_tr);
+            } else {
+                hero_item_name = object_items_data[object_item_data].name;
+                hero_item_icon = object_items_data[object_item_data].icon;
+                hero_item_color = object_items_data[object_item_data].displayColor;
+
+                hero_item_icon = icon_url_prefix_item + hero_item_icon + icon_url_suffix_item;
+
+                if (object_item_data === 'neck' || object_item_data === 'legs' || object_item_data === 'bracers'  || object_item_data === 'rightFinger') {
+                    game_result_hero_detail_table_tr = document.createElement('tr');
+                    game_result_hero_detail_table_td = document.createElement('td');
+                    game_result_hero_detail_table_td_img = document.createElement('img');
+    
+                    game_result_hero_detail_table_td_img.setAttribute('src', hero_item_icon);
+                    game_result_hero_detail_table_td_img.setAttribute('alt', '미확인');
+                    game_result_hero_detail_table_td_img.setAttribute('title', hero_item_name);
+    
+                    game_result_hero_detail_table_td.classList.add(`item_grade_color_${hero_item_color}`);
+                    game_result_hero_detail_table_td.appendChild(game_result_hero_detail_table_td_img);
+                    game_result_hero_detail_table_tr.appendChild(game_result_hero_detail_table_td);
+                    game_result_hero_detail_table.appendChild(game_result_hero_detail_table_tr);
+                } else {
+                    game_result_hero_detail_table_td = document.createElement('td');
+                    game_result_hero_detail_table_td_img = document.createElement('img');
+    
+                    game_result_hero_detail_table_td_img.setAttribute('src', hero_item_icon);
+                    game_result_hero_detail_table_td_img.setAttribute('alt', '미확인');
+                    game_result_hero_detail_table_td_img.setAttribute('title', hero_item_name);
+    
+                    game_result_hero_detail_table_td.classList.add(`item_grade_color_${hero_item_color}`);
+                    game_result_hero_detail_table_td.appendChild(game_result_hero_detail_table_td_img);
+                    game_result_hero_detail_table_tr.appendChild(game_result_hero_detail_table_td);
+                }
+            }
+        }
+
+        // div에 붙이기
+        game_result_div.appendChild(game_result_hero_detail_table);
+
+        // Todo. 2021-07-16
+
+        // 테이블로 화면 이동
+        game_result_hero_detail_table.scrollIntoView();
     } catch (error) {
-        console.log(`[Blizzard Diablo3 영웅상세정보 에러] `, error)
+        console.log(`[Blizzard Diablo3 영웅상세정보 에러] ${error}`);
         return;
     }
 }

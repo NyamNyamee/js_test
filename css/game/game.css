@@ -10,12 +10,17 @@
     margin: 5px;
 }
 
-.game_result_table, .game_result_hero_table, .game_result_hero_detail_table {
+.game_result_div > table {
     margin-top: 50px;
     border: 1px solid grey;
     text-align: center;
 }
  
+.game_result_hero_detail_skill_table, .game_result_hero_detail_item_table {
+    display: inline-block;
+    margin-right: 50px;
+}
+
 .game_content_search_input_text {
     width: 300px;
     margin: 10px;
@@ -29,4 +34,14 @@ th {
 td {
     padding: 10px;
     border-bottom: 1px dotted grey;
+}
+
+.item_grade_color_green {
+    background-color: forestgreen;
+    opacity: 0.7;
+}
+
+.item_grade_color_orange {
+    background-color: rgb(124, 82, 3);
+    opacity: 0.7;
 }

@@ -395,7 +395,7 @@ async function getMoviePersonInfo() {
 
         const response = await transmitAndReceive(host, path, query, header, data, method)
 
-        console.log(`[한국영화진흥위원회 KOFIC 영화인검색정보 응답] `, response)
+        // console.log(`[한국영화진흥위원회 KOFIC 영화인검색정보 응답] `, response)
 
         // 응답 데이터를 결과테이블에 입력
         let list_data = response.data.peopleListResult.peopleList;

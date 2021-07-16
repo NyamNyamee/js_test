@@ -1,7 +1,9 @@
 // 페이지 로딩 시
 document.addEventListener("DOMContentLoaded", function () {
     try {
-
+        // 메뉴에 포커스
+        let music_loacation_select = document.getElementById('music_loacation_select');
+        music_loacation_select.focus();
     } catch (error) {
         console.error(error);
     }
@@ -30,6 +32,7 @@ async function getMusicNew100() {
         let music_result_table_tr = ``;
         let music_result_table_td = ``;
         let music_result_table_td_text = ``;
+        let music_result_table_td_img = ``;
 
         // table 태그 생성
         music_result_table = document.createElement('table');
@@ -37,7 +40,7 @@ async function getMusicNew100() {
         music_result_div.appendChild(music_result_table);
         
         // 테이블 컬럼명 배열 생성, th태그 생성
-        let th_tag_values = ['번호', '곡명', '아티스트', '발매일', '장르', '앨범명'];
+        let th_tag_values = ['번호', '곡명', '아티스트', '발매일', '장르', '앨범명', '앨범자켓'];
         th_tag_values.forEach((th_tag_value) => {
             music_result_table_th = document.createElement('th');
             music_result_table_th_text = document.createTextNode(th_tag_value);
@@ -65,17 +68,28 @@ async function getMusicNew100() {
             let music_album_title = element.album.title;
             let music_album_release_date =  element.album.releaseYmd;
             let music_album_genre = element.album.genreStyle;
+            let music_album_image_url = element.album.imgList[0].url;
             let music_artist = element.representationArtist.name;
             
             // tr생성
             music_result_table_tr = document.createElement('tr');
 
             // 테이블 내용 배열 생성, td태그 생성
-            let td_tag_values = [music_index, music_name, music_artist, music_album_release_date, music_album_genre, music_album_title];
-            td_tag_values.forEach((td_tag_value) => {
+            let td_tag_values = [music_index, music_name, music_artist, music_album_release_date, music_album_genre, music_album_title, music_album_image_url];
+            td_tag_values.forEach((td_tag_value, index) => {
                 music_result_table_td = document.createElement('td');
-                music_result_table_td_text = document.createTextNode(td_tag_value);
-                music_result_table_td.appendChild(music_result_table_td_text);
+
+                // 이미지 url일때와 아닐때 구분
+                if (index === 6) {
+                    music_result_table_td_img = document.createElement('img');
+                    music_result_table_td_img.setAttribute('src', td_tag_value);
+                    music_result_table_td_img.setAttribute('alt', '미확인');
+                    music_result_table_td.appendChild(music_result_table_td_img);
+                } else {
+                    music_result_table_td_text = document.createTextNode(td_tag_value);
+                    music_result_table_td.appendChild(music_result_table_td_text);
+                }
+
                 music_result_table_tr.appendChild(music_result_table_td);
             });
 

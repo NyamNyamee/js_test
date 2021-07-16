@@ -172,3 +172,12 @@
 //     console.log(obj_01[obj]);
 //     console.log('---')
 // }
+
+/*
+    정규표현식 테스트
+*/
+// let reg_ex = /\S#\d/; // 공백이 아님, #포함, 숫자
+// let test_text = '루피#3363';
+// let test_result = reg_ex.test(test_text);
+// let match_result = test_text.split(reg_ex);
+// console.log(test_result, match_result);
