@@ -849,6 +849,7 @@ async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizz
         game_result_div.appendChild(game_result_hero_detail_table);
 
         // Todo. 2021-07-16
+        // hero item 상세 api로 변경, 그 아래 추종자 정보 api로 테이블 추가 -> 우선 보류
 
         // 테이블로 화면 이동
         game_result_hero_detail_table.scrollIntoView();

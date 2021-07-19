@@ -8,3 +8,6 @@
 
 2. static.js
 - 배틀태그로 api 요청 에러 시 해당 배틀태그가 없어 404에러나면 에러메시지 alert [o]
+
+3. accident.js 
+- cors에러 잡기

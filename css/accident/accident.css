@@ -1,0 +1,35 @@
+.accident_search_category {
+    margin: 10px;
+}
+
+.accident_result_table {
+    margin-top: 50px;
+    border: 1px solid grey;
+    text-align: center;
+}
+
+.accident_input {
+    margin: 10px;
+}
+
+.accident_menu_select {
+    margin: 10px;
+}
+
+.validation_success_input{
+    color: springgreen;
+}
+
+.validation_failure_input{
+    color: red;
+}
+
+th {
+    border-bottom: 2px solid grey;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px dotted grey;
+}

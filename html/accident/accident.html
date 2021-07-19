@@ -5,30 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/static/static.css">
-    <link rel="stylesheet" href="/css/game/game.css">  
+    <link rel="stylesheet" href="/css/accident/accident.css">  
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/resources/auth/properties.js"></script>
     <script src="/js/static/static.js"></script>
-    <script src="/js/game/game.js"></script> 
-    <title>Game</title>
+    <script src="/js/accident/accident.js"></script> 
+    <title>Accident</title>
 </head>
 <body>
     <header include-html="/html/static/header.html"></header>
     <nav include-html="/html/static/nav.html"></nav>
     <main>
-        <div class="game_search_div">
-            <div class="game_search_category">
-                <label class="game_input_label" for="game_menu_select">플랫폼
-                    <select id="game_menu_select" class="game_select" name="game_menu_select" required="required" onchange="selectGameMenu();">
-                        <option value="00">선택</option>
-                        <option value="01">Steam</option>
-                        <option value="02">Blizzard</option>
-                    </select> 
+        <div class="accident_search_div">
+            <div class="accident_search_category">
+                <label class="accident_input_label" for="accident_search_year_input">사망 교통사고정보 검색 연도:
+                    <input type="text" id="accident_search_year_input" class="accident_input" placeholder="조회할 연도를 입력해주세요" required="required">
                 </label>
             </div>
         </div>
-        <div class="game_result_div">
-
+        <div class="accident_result_div">
+            
         </div>
     </main>
     <footer include-html="/html/static/footer.html"></footer>
