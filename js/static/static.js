@@ -93,11 +93,11 @@ async function includeHTML() {
 
 /* [Axios] rest api 요청 */
 async function transmitAndReceive(host, path, query, headers, data, method) {
+  const url = host + path + query;
+  let response = ``;
+  let error_message = ``;
+  
   try {
-    const url = host + path + query;
-    let response = ``;
-    let error_message = ``;
-
     if (method === "GET") {
       response = await axios({
         url,
@@ -141,9 +141,9 @@ function removeResultTables(category_result_div, amount_to_remain) {
   let category_result_tables_length = category_result_tables.length;
 
   if (category_result_tables_length > 0) {
-      for (let i = amount_to_remain; i < category_result_tables_length; i++) {
-          category_result_div.removeChild(category_result_tables[i]);
-      }
+    for (let i = amount_to_remain; i < category_result_tables_length; i++) {
+      category_result_div.removeChild(category_result_tables[i]);
+    }
   }
 }
 
