@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/static/static.css">
+    <link rel="stylesheet" href="/css/kakao/kakao.css">  
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/resources/auth/properties.js"></script>
+    <script src="/js/static/static.js"></script>
+    <script src="/js/kakao/kakao.js"></script> 
+    <title>Kakao</title>
+</head>
+<body>
+    <header include-html="/html/static/header.html"></header>
+    <nav include-html="/html/static/nav.html"></nav>
+    <main>
+        <div class="kakao_search_div">
+            <div class="kakao_search_category">
+                <label class="kakao_input_label" for="kakao_search_year_input">하여 로그인 후 url에 나타난 'code' 값:
+                    <input type="text" id="kakao_access_code_input" class="kakao_input" placeholder="code" required="required">
+                    <button class="kakao_confirm_button">확인</button>
+                </label>
+            </div>
+        </div>
+        <div class="kakao_result_div">
+            
+        </div>
+    </main>
+    <footer include-html="/html/static/footer.html"></footer>
+</body>
+<script>
+    includeHTML();
+</script>
+</html>

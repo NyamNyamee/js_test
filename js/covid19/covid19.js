@@ -44,7 +44,7 @@ async function getVaccineCenterInfo() {
         covid19_result_div.appendChild(covid19_result_table);
 
         // 테이블 컬럼명 배열 생성, th태그 생성
-        let th_tag_values = ['센터번호', '우편번호', '센터명', '시설명', '주소'];
+        let th_tag_values = ['센터번호', '우편번호', '센터명', '시설명', '주소', '설립일자', '전화번호'];
         th_tag_values.forEach((th_tag_value) => {
             covid19_result_table_th = document.createElement('th');
             covid19_result_table_th_text = document.createTextNode(th_tag_value);
@@ -72,13 +72,17 @@ async function getVaccineCenterInfo() {
             let covid19_center_name = element.centerName;
             let covid19_center_facility_name = element.facilityName;
             let covid19_center_address = element.address;
+            let covid19_center_created_date = element.createdAt;
+            let covid19_center_phone_number = element.phoneNumber;
+
+            covid19_center_created_date = covid19_center_created_date.split(' ')[0];
 
             if (covid19_center_address.includes(covid19_vaccine_center_by_search_address_input_value)) {
                 // tr생성
                 covid19_result_table_tr = document.createElement('tr');
 
                 // 테이블 내용 배열 생성, td태그 생성
-                let td_tag_values = [covid19_center_id, covid19_center_zip_code, covid19_center_name, covid19_center_facility_name, covid19_center_address];
+                let td_tag_values = [covid19_center_id, covid19_center_zip_code, covid19_center_name, covid19_center_facility_name, covid19_center_address, covid19_center_created_date, covid19_center_phone_number];
                 td_tag_values.forEach((td_tag_value) => {
                     covid19_result_table_td = document.createElement('td');
                     covid19_result_table_td_text = document.createTextNode(td_tag_value);

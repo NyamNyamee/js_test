@@ -1,0 +1,19 @@
+.kakao_search_category {
+    margin: 10px;
+}
+
+.kakao_result_table {
+    margin-top: 50px;
+    border: 1px solid grey;
+    text-align: center;
+}
+ 
+th {
+    border-bottom: 2px solid grey;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px dotted grey;
+}

@@ -1115,7 +1115,6 @@ function transfer_search_code_to_string(response_column, response_value) {
         else if (response_value === '7') return_value = '토';
     }
 
-
     // 사고유형 대분류
     else if (response_column === 3) {
         if (response_value === '01')
@@ -1129,7 +1128,6 @@ function transfer_search_code_to_string(response_column, response_value) {
         else if (response_value === '99')
             return_value = '기타';
     }
-
 
     // 사고유형 중분류
     else if (response_column === 4) {
@@ -1182,7 +1180,6 @@ function transfer_search_code_to_string(response_column, response_value) {
         else if (response_value === 'Z6')
             return_value = '기타';
     }
-
 
     // 사고유형
     else if (response_column === 5) {

@@ -92,7 +92,7 @@ async function includeHTML() {
 }
 
 /* [Axios] rest api 요청 */
-async function transmitAndReceive(host, path, query, headers, data, method) {
+async function transmitAndReceive(host, path, query, headers, data, method, auth) {
   const url = host + path + query;
   let response = ``;
   let error_message = ``;
@@ -108,13 +108,10 @@ async function transmitAndReceive(host, path, query, headers, data, method) {
     else if (method === "POST") {
       response = await axios({
         url,
-        data,
         method,
-        auth: {
-          username: data.get('client_id'),
-          password: data.get('client_secret')
-        },
-        headers
+        headers,
+        data,
+        auth
       });
     } else {
       throw new Error(`${method} 방식으로 요청할 수 없습니다.`)

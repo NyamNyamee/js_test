@@ -433,15 +433,19 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
         let path = `/oauth/token`;
         let query = ``;
         let headers = {
-            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8;'
+            
         };
         let data = new FormData();
         data.append('grant_type', 'client_credentials');
         data.append('client_id', BLIZZARD_CLIENT_ID);
         data.append('client_secret', BLIZZARD_CLIENT_SECRET);
         let method = `POST`;
+        let auth = {
+            username: data.get('client_id'),
+            password: data.get('client_secret')
+        };
 
-        const response = await transmitAndReceive(host, path, query, headers, data, method)
+        const response = await transmitAndReceive(host, path, query, headers, data, method, auth)
 
         // console.log(`[Blizzard Diablo3 토큰요청 응답] `, response)
         // 응답이 객체가 아닌 문자열(에러메시지)이라면 알림창 띄우고 리턴
@@ -490,7 +494,7 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
         let path = `/d3/profile/${game_content_search_input_value}/`;
         let query = `?locale=${BLIZZARD_LOCALE}&access_token=${blizzard_access_token}`;
         let headers = {
-            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8;'
+            
         };
         let data = ``;
         let method = `GET`;
@@ -617,7 +621,7 @@ async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizz
         let path = `/d3/profile/${game_content_search_input_value}/hero/${hero_id}`;
         let query = `?locale=${BLIZZARD_LOCALE}&access_token=${blizzard_access_token}`;
         let headers = {
-            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8;'
+            
         };
         let data = ``;
         let method = `GET`;
