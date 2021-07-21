@@ -181,3 +181,58 @@
 // let test_result = reg_ex.test(test_text);
 // let match_result = test_text.split(reg_ex);
 // console.log(test_result, match_result);
+
+/*
+    Promise 테스트
+ */
+let var01 = 0;
+let var02 = 0;
+let var03 = 0;
+function getData() {
+    return new Promise((resolve, rejcet) => { // 상태: Pending
+        setTimeout(() => {
+            var01 = 3; // 비동기 처리 로직이라고 가정
+            if (var01 === 3) {
+                resolve(var01); // 성공 값 리턴 // 상태: Fulfilled
+            } else {
+                rejcet(`실패1 ${new Error('첫번째  비동기error')}`); // 에러 값 리턴. catch에서 잡음 // 상태: Rejected
+            }
+        }, 3000);
+        // var01 += var02; // 에러 시 catch에서 잡음
+    });
+}
+
+function getData2(response) {
+    console.log(`첫번째 응답 ${response}`);
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            var02 = response + 4; // 비동기 처리 로직이라고 가정
+            if (var02 === 6) {
+                resolve(var02); // 성공 값 리턴 // 상태: Fulfilled
+            } else {
+                reject(`실패2 ${new Error('두번째 비동기 error')}`); // 에러 값 리턴. catch에서 잡음 // 상태: Rejected
+            }
+        }, 3000);
+    });
+}
+
+function getData3(response) {
+    console.log(`두번째 응답 ${response}`);
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            var03 = response + 3; // 비동기 처리 로직이라고 가정
+            if (var03 === 9) {
+                resolve(var02); // 성공 값 리턴 // 상태: Fulfilled
+            } else {
+                reject(`실패3 ${new Error('세번째 비동기 error')}`); // 에러 값 리턴. catch에서 잡음 // 상태: Rejected
+            }
+        }, 3000);
+    });
+}
+
+function catchRejected(error) {
+    console.log(`[에러] ${error}`);
+}
+
+getData().then(getData2).catch(catchRejected).then(getData3); // getData, getData2에 대해 검사해서 중간에 예외 발생 시점에 종료하고 getData3실행
+getData().then(getData2).then(getData3).catch(catchRejected); // getData, getData2, getData3에 대해 검사해서 중간에 예외 발생 시점에 종료
