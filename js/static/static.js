@@ -132,15 +132,36 @@ async function transmitAndReceive(host, path, query, headers, data, method, auth
   }
 }
 
-/* (파라미터1) 하위에 있는 table태그를 (파라미터2)개 만큼만 남기고 모두 제거 */
-function removeResultTables(category_result_div, amount_to_remain) {
-  let category_result_tables = category_result_div.querySelectorAll('table');
-  let category_result_tables_length = category_result_tables.length;
+// /* (파라미터1) 하위에 있는 table태그를 (파라미터2)개 만큼만 남기고 모두 제거 */
+// function removeResultTables(category_result_div, amount_to_remain) {
+//   let category_result_tables = category_result_div.querySelectorAll('table');
+//   let category_result_tables_length = category_result_tables.length;
 
-  if (category_result_tables_length > 0) {
-    for (let i = amount_to_remain; i < category_result_tables_length; i++) {
-      category_result_div.removeChild(category_result_tables[i]);
+//   if (category_result_tables_length > 0) {
+//     for (let i = amount_to_remain; i < category_result_tables_length; i++) {
+//       category_result_div.removeChild(category_result_tables[i]);
+//     }
+//   }
+// }
+
+/* (파라미터1) 하위에 있는 (파라미터2) 태그를 (파라미터3)개 만큼만 남기고 모두 제거 */
+function removeLowerTags(parent_tag, child_tag, amount_to_remain) {
+  let child_tags = parent_tag.querySelectorAll(child_tag);
+  let child_tags_length = child_tags.length;
+
+  if (child_tags_length > 0) {
+    for (let i = amount_to_remain; i < child_tags_length; i++) {
+      parent_tag.removeChild(child_tags[i]);
     }
+  }
+}
+
+/* (파라미터1) 태그 (파라미터2)에 따라 활성화 / 비활성화 */
+function setEnableTags(tag, enable_flag) {
+  if (enable_flag) {
+    tag.removeAttribute('disabled');
+  } else {
+    tag.setAttribute('disabled', 'disabled');
   }
 }
 

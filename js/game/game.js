@@ -57,8 +57,8 @@ function selectGameMenu() {
     // 결과가 나타날 div
     let game_result_div = document.querySelector('div.game_result_div');
 
-    // game_result_div 아래 table 태그들을 찾아보고 있으면 전부 제거
-    removeResultTables(game_result_div, 0);
+    // 하위 태그 제거
+    removeLowerTags(game_result_div, 'table', 0);
 
     // 새로 생성할 셀렉트, 옵션 태그들
     let game_content_select = ``;
@@ -95,7 +95,9 @@ function selectGameMenu() {
                             game_input_label.removeChild(game_content_search_input);
                             game_input_label.removeChild(game_content_search_button);
                         }
-                        removeResultTables(game_result_div, 0); break;
+                        // 하위 태그 제거
+                        removeLowerTags(game_result_div, 'table', 0);
+                        break;
                     // Steam_게임조회
                     case '01':
                         game_content_search_input = document.createElement('input');
@@ -153,7 +155,9 @@ function selectGameMenu() {
                             game_input_label.removeChild(game_content_search_input);
                             game_input_label.removeChild(game_content_search_button);
                         }
-                        removeResultTables(game_result_div, 0); break;
+                        // 하위 태그 제거
+                        removeLowerTags(game_result_div, 'table', 0);
+                        break;
                     // Blizzard_daiblo3
                     case '01':
                         game_content_select = document.createElement('select');
@@ -172,7 +176,8 @@ function selectGameMenu() {
                                         game_input_label.removeChild(game_content_search_input);
                                         game_input_label.removeChild(game_content_search_button);
                                     }
-                                    removeResultTables(game_result_div, 0);
+                                    // 하위 태그 제거
+                                    removeLowerTags(game_result_div, 'table', 0);
                                     break;
                                 // Blizzard_diablo3_프로필조회
                                 case '01':
@@ -219,7 +224,8 @@ function selectGameMenu() {
                             game_input_label.removeChild(game_content_search_input);
                             game_input_label.removeChild(game_content_search_button);
                         }
-                        removeResultTables(game_result_div, 0);
+                        // 하위 태그 제거
+                        removeLowerTags(game_result_div, 'table', 0);
                         break;
                     case '03':
                         alert('서비스 준비중입니다.');//  메인메뉴, 블리자드 메뉴 제외 라벨태그 하위 모든 메뉴 제거 
@@ -236,7 +242,8 @@ function selectGameMenu() {
                             game_input_label.removeChild(game_content_search_input);
                             game_input_label.removeChild(game_content_search_button);
                         }
-                        removeResultTables(game_result_div, 0);
+                        // 하위 태그 제거
+                        removeLowerTags(game_result_div, 'table', 0);
                         break;
                     case '04':
                         alert('서비스 준비중입니다.');//  메인메뉴, 블리자드 메뉴 제외 라벨태그 하위 모든 메뉴 제거 
@@ -253,7 +260,8 @@ function selectGameMenu() {
                             game_input_label.removeChild(game_content_search_input);
                             game_input_label.removeChild(game_content_search_button);
                         }
-                        removeResultTables(game_result_div, 0);
+                        // 하위 태그 제거
+                        removeLowerTags(game_result_div, 'table', 0);
                         break;
                     case '05':
                         alert('서비스 준비중입니다.');//  메인메뉴, 블리자드 메뉴 제외 라벨태그 하위 모든 메뉴 제거 
@@ -270,7 +278,8 @@ function selectGameMenu() {
                             game_input_label.removeChild(game_content_search_input);
                             game_input_label.removeChild(game_content_search_button);
                         }
-                        removeResultTables(game_result_div, 0);
+                        // 하위 태그 제거
+                        removeLowerTags(game_result_div, 'table', 0);
                         break;
                 }
             })
@@ -290,7 +299,7 @@ function selectGameMenu() {
     }
 }
 
-// 검색버튼 클릭 이벤트 핸들러 (기변인자 활용)
+// 검색버튼 클릭 이벤트 핸들러 (가변인자 활용)
 function game_search_button_handler() {
     // 검색 input값
     let game_content_search_input = document.querySelector('.game_content_search_input_text');
@@ -325,14 +334,19 @@ function game_search_button_handler() {
 /* Steam_게임조회 */
 async function getSteamGameInfo(game_content_search_input) {
     try {
+        // 버튼 비활성화
+        let game_content_search_button = ``;
+        game_content_search_button = document.querySelector('.game_input_label > button')
+        setEnableTags(game_content_search_button, false);
+
         // 검색 값 저장
         let game_content_search_input_value = game_content_search_input.value;
 
         // 결과가 나타날 div
         let game_result_div = document.querySelector('div.game_result_div');
 
-        // game_result_div 하위 테이블 모두 제거
-        removeResultTables(game_result_div, 0);
+        // 하위 태그 제거
+        removeLowerTags(game_result_div, 'table', 0);
 
         // 생성할 태그 초기화
         let game_result_table_th = ``;
@@ -391,6 +405,9 @@ async function getSteamGameInfo(game_content_search_input) {
             }
         });
 
+        // 버튼 활성화
+        setEnableTags(game_content_search_button, true);
+
         // 일치하는 검색결과가 하나도 없어서 tr태그가 만들어지지 않았다면
         game_result_table_tr = document.querySelector('.game_result_table > tr');
         if (!game_result_table_tr) {
@@ -404,6 +421,7 @@ async function getSteamGameInfo(game_content_search_input) {
             return;
         }
     } catch (error) {
+        alert(`[Steam 게임조회 정보 에러] 잠시 후 재시도 해주세요`);
         console.error(`[Steam 게임조회 정보 에러] ${error}`);
     }
 }
@@ -411,6 +429,11 @@ async function getSteamGameInfo(game_content_search_input) {
 
 /* Blizzard_Diablo3_프로필정보 */
 async function getBlizzardDiablo3Profile(game_content_search_input) {
+    // 버튼 비활성화
+    let game_content_search_button = ``;
+    game_content_search_button = document.querySelector('.game_input_label > button')
+    setEnableTags(game_content_search_button, false);
+
     // 블라지드 토큰
     let blizzard_access_token = ``;
     // 사용자가 입력한 값(배틀태그)
@@ -465,8 +488,8 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
         // 결과가 나타날 div
         let game_result_div = document.querySelector('div.game_result_div');
 
-        // 테이블 모두 제거
-        removeResultTables(game_result_div, 0);
+        // 하위 태그 제거
+        removeLowerTags(game_result_div, 'table', 0);
 
         // 생성할 태그 초기화
         let game_result_table_th = ``;
@@ -591,6 +614,9 @@ async function getBlizzardDiablo3Profile(game_content_search_input) {
             // 테이블에 붙이기
             game_result_div.appendChild(game_result_hero_table);
         });
+
+        // 버튼 활성화
+        setEnableTags(game_content_search_button, true);
     } catch (error) {
         console.error(`[Blizzard Diablo3 프로필조회 에러] ${error}`);
     }
@@ -604,8 +630,8 @@ async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizz
         // 결과가 나타날 div
         let game_result_div = document.querySelector('div.game_result_div');
 
-        // 테이블 두개남기고 모두 제거
-        removeResultTables(game_result_div, 2);
+        // 하위 태그 제거
+        removeLowerTags(game_result_div, 'table', 2);
 
         // 생성할 태그 초기화
         let game_result_hero_detail_table = ``;
@@ -681,7 +707,7 @@ async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizz
         game_result_hero_detail_table.classList.add('game_result_hero_detail_skill_table');
 
         // 테이블 컬럼명 배열 생성, th태그 생성
-        let hero_active_skill_th_tag_values = ['스킬명(한글)', '레벨', '아이콘'];
+        let hero_active_skill_th_tag_values = ['스킬명(한글)', '레벨', '아이콘(설명)'];
         hero_active_skill_th_tag_values.forEach((hero_active_skill_th_tag_value) => {
             game_result_hero_detail_table_th = document.createElement('th');
             game_result_hero_detail_table_th_text = document.createTextNode(hero_active_skill_th_tag_value);
@@ -734,7 +760,7 @@ async function getHeroDetailInfo(game_content_search_input_value, hero_id, blizz
         game_result_hero_detail_table.classList.add('game_result_hero_detail_skill_table');
 
         // 테이블 컬럼명 배열 생성, th태그 생성
-        let hero_passive_skill_th_tag_values = ['스킬명 (한글)', '레벨', '아이콘'];
+        let hero_passive_skill_th_tag_values = ['스킬명 (한글)', '레벨', '아이콘(설명)'];
         hero_passive_skill_th_tag_values.forEach((hero_passive_skill_th_tag_value) => {
             game_result_hero_detail_table_th = document.createElement('th');
             game_result_hero_detail_table_th_text = document.createTextNode(hero_passive_skill_th_tag_value);

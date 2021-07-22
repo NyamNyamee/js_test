@@ -158,6 +158,11 @@ function selectSigungu() {
 
 /* 셀렉트박스 값 받아와서 검색결과 뿌려주기 */
 async function getAccidentInfo(search_year, search_sido, search_sigungu) {
+    // 버튼 비활성화
+    let accident_search_button = ``;
+    accident_search_button = document.querySelector('.accident_search_category > button');
+    setEnableTags(accident_search_button, false);
+
     let sido_code = ``;
     let sigungu_code = ``;
     sido_code = transfer_search_string_to_code(1, search_sido, ``);
@@ -241,7 +246,11 @@ async function getAccidentInfo(search_year, search_sido, search_sigungu) {
 
         // 결과 div에 부착
         accident_result_div.appendChild(accident_result_table);
+
+        // 버튼 활성화
+        setEnableTags(accident_search_button, true);
     } catch (error) {
+        alert(`[공공데이터포털 사망교통사고정보 에러] 잠시후 다시 시도해 주세요`);
         console.error(`[공공데이터포털 사망교통사고정보 에러] ${error}`);
     }
 }

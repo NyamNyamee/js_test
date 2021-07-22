@@ -2,6 +2,20 @@
     margin: 10px;
 }
 
+.before_initializing {
+    /* visibility: hidden; 보이진 않지만 공간을 차지함  */
+    display: none;
+}
+
+.kakao_menu_select {
+    margin: 10px;
+}
+
+.kakao_input {
+    width: 700px;
+    margin: 10px;
+}
+
 .kakao_result_table {
     margin-top: 50px;
     border: 1px solid grey;

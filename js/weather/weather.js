@@ -32,6 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
 /* input 값 받아와서 검색결과 뿌려주기 */
 async function getPastWeatherInfo() {
     try {
+        // 버튼 비활성화
+        let weather_search_button = ``;
+        weather_search_button = document.querySelector('.weather_search_category > button');
+        setEnableTags(weather_search_button, false);
+
         // 검색날짜 input값 받아오기, 유효성 검사
         let weather_by_search_date_input = document.getElementById('weather_by_search_date_input');
         let weather_by_search_date_input_value = weather_by_search_date_input.value.replaceAll('-', '');
@@ -113,7 +118,11 @@ async function getPastWeatherInfo() {
             // 테이블에 붙이기
             weather_result_table.appendChild(weather_result_table_tr);
         });
+
+        // 버튼 활성화
+        setEnableTags(weather_search_button, true);
     } catch (error) {
+        alert(`[공공데이터포털] 지난 날씨정보 에러] 잠시 후 재시도 해주세요`);
         console.error(`[공공데이터포털] 지난 날씨정보 에러] ${error}`);
     }
 }
