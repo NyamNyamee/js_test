@@ -11,6 +11,12 @@
     margin: 10px;
 }
 
+.kakao_util_img {
+    margin-right: 5px;
+    width: 50px;
+    height: 20px;
+}
+
 .kakao_input {
     width: 700px;
     margin: 10px;

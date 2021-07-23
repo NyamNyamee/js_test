@@ -32,7 +32,7 @@ async function kakaoPageInitialize() {
     // 접근코드 요청
     response = await kakaoGetAccessCode();
     if (typeof(response) === 'string') {
-        alert('ga');
+        alert('[카카오 접근 코드 요청 에러] 잠시 후 다시 시도해 주세요');
         return;
     }
 
@@ -626,6 +626,8 @@ function setLanguageTranslateMenu() {
         '태국어': 'th',
         '터키어': 'tr'
     };
+    let kakao_language_translate_exhange_a = ``;
+    let kakao_language_translate_exhange_img = ``;
 
     kakao_search_category = document.querySelector('.kakao_search_category');
 
@@ -639,8 +641,13 @@ function setLanguageTranslateMenu() {
     kakao_menu_select = document.createElement('select');
     kakao_menu_select.setAttribute('id', 'kakao_translate_input_language');
     kakao_menu_select.classList.add('kakao_menu_select');
+    kakao_menu_select.setAttribute('onchange', `exceptCurrentOption();`);
     for (kakao_language_translate_option in kakao_language_translate_options) {
         kakao_menu_option = document.createElement('option');
+        // 영어옵션 숨기기 (초기값 지정)
+        if (kakao_language_translate_option === '영어') {
+            setEnableTags(kakao_menu_option, false);
+        }
         kakao_menu_option.setAttribute('value', kakao_language_translate_options[kakao_language_translate_option]);
         kakao_menu_option_text = document.createTextNode(kakao_language_translate_option);
         kakao_menu_option.appendChild(kakao_menu_option_text);
@@ -649,18 +656,36 @@ function setLanguageTranslateMenu() {
     kakao_menu_label.appendChild(kakao_menu_select);
     kakao_search_category.appendChild(kakao_menu_label);
 
+    // 옵션 맞교환 링크, 이미지 생성
+    kakao_language_translate_exhange_a = document.createElement('a');
+    kakao_language_translate_exhange_a.setAttribute('href', 'javascript:exchangeOppositeOption();');
+    kakao_language_translate_exhange_img = document.createElement('img');
+    kakao_language_translate_exhange_img.classList.add('kakao_util_img');
+    kakao_language_translate_exhange_img.setAttribute('src', '../../resources/image/exchangeIcon.png');
+    kakao_language_translate_exhange_img.setAttribute('alt', '미확인');
+    kakao_language_translate_exhange_a.appendChild(kakao_language_translate_exhange_img);
+    // Todo. 2021-07-23 입출력 언어 맞교환 잘 안되서 일단 보류
+    // kakao_search_category.appendChild(kakao_language_translate_exhange_a);
+
     // 아웃풋 라벨 생성
     kakao_menu_label = document.createElement('label');
     kakao_menu_label.setAttribute('for', 'kakao_translate_output_language');
-    kakao_menu_label_text = document.createTextNode('출력 언어')
+    kakao_menu_label_text = document.createTextNode('출력 언어');
     kakao_menu_label.appendChild(kakao_menu_label_text);
 
     // 아웃풋 셀렉트박스 생성
     kakao_menu_select = document.createElement('select');
     kakao_menu_select.setAttribute('id', 'kakao_translate_output_language');
     kakao_menu_select.classList.add('kakao_menu_select');
+    kakao_menu_select.setAttribute('onchange', `exceptCurrentOption();`);
     for (kakao_language_translate_option in kakao_language_translate_options) {
         kakao_menu_option = document.createElement('option');
+        // 한글이면 숨기고 영어일때 선택되게 (초기값 지정)
+        if (kakao_language_translate_option === '한글') {
+            setEnableTags(kakao_menu_option, false);
+        } else if (kakao_language_translate_option === '영어') {
+            kakao_menu_option.setAttribute('selected', 'selected');
+        }
         kakao_menu_option.setAttribute('value', kakao_language_translate_options[kakao_language_translate_option]);
         kakao_menu_option_text = document.createTextNode(kakao_language_translate_option);
         kakao_menu_option.appendChild(kakao_menu_option_text);
@@ -712,9 +737,11 @@ async function kakaoLanguageTranslate() {
         // 유효성검사
         if (kakao_translate_input_language_select_value === kakao_translate_output_language_select_value) {
             alert('서로 다른 언어로만 번역할 수 있습니다');
+            setEnableTags(kakao_language_translate_button, true);
             return;
         } else if (kakao_translate_input_language_input_value.trim().length === 0) {
             alert('공백은 입력할 수 없습니다');
+            setEnableTags(kakao_language_translate_button, true);
             return;
         }
 
@@ -751,4 +778,73 @@ async function kakaoLanguageTranslate() {
         alert(`[카카오 언어번역 에러] ${response}`);
         console.error(`[카카오 언어번역 에러] ${response}`);
     }
+}
+
+/* 언어번역 입력언어 선택 시 출력언어 옵션에서 해당 제거 혹은 그 반대 */
+function exceptCurrentOption() {
+    let kakao_menu_input_select = document.getElementById('kakao_translate_input_language');
+    let kakao_menu_input_select_value = ``;
+    let kakao_menu_input_options = ``;
+    let kakao_menu_output_select = document.getElementById('kakao_translate_output_language');
+    let kakao_menu_output_select_value = ``;
+    let kakao_menu_output_options = ``;
+
+    kakao_menu_input_select_value = kakao_menu_input_select.value;
+    kakao_menu_output_options = document.querySelectorAll('#kakao_translate_output_language > option');
+    kakao_menu_output_options.forEach(kakao_menu_output_option => {
+        if (kakao_menu_input_select_value === kakao_menu_output_option.value) {
+            setEnableTags(kakao_menu_output_option, false);
+        } else {
+            setEnableTags(kakao_menu_output_option, true);
+        }
+    });
+
+    kakao_menu_output_select_value = kakao_menu_output_select.value;
+    kakao_menu_input_options = document.querySelectorAll('#kakao_translate_input_language > option');
+    kakao_menu_input_options.forEach(kakao_menu_input_option => {
+        if (kakao_menu_output_select_value === kakao_menu_input_option.value) {
+            setEnableTags(kakao_menu_input_option, false);
+        } else {
+            setEnableTags(kakao_menu_input_option, true);
+        }
+    });
+}
+
+/* 언어번역 입출력 언어 반대로 교환 */
+/* 잘 안되서 일단 보류 */
+function exchangeOppositeOption() {
+    let kakao_menu_input_select = document.getElementById('kakao_translate_input_language');
+    let kakao_menu_input_select_value = ``;
+    let kakao_menu_input_options = ``;
+    let kakao_menu_output_select = document.getElementById('kakao_translate_output_language');
+    let kakao_menu_output_select_value = ``;
+    let kakao_menu_output_options = ``;
+
+    let temp_value = ``;
+
+    kakao_menu_input_select_value = kakao_menu_input_select.value;
+    kakao_menu_input_options = document.querySelectorAll('#kakao_translate_input_language > option');
+
+    kakao_menu_output_select_value = kakao_menu_output_select.value;
+    kakao_menu_output_options = document.querySelectorAll('#kakao_translate_output_language > option');
+
+    // 입력언어 옵션 반복하며 출력언어 선택옵션과 동일한 옵션 발견 시 해당 언어로 입력언어 변경
+    kakao_menu_input_options.forEach(kakao_menu_input_option => {
+        if (kakao_menu_input_option.value === kakao_menu_output_select_value) {
+            kakao_menu_input_option.setAttribute('selected', 'selected');
+        } else {
+            kakao_menu_input_option.removeAttribute('selected');
+        }
+    });
+
+    // 출력언어 옵션 반복하며 입력언어 선택옵션과 동일한 옵션 발견 시 해당 언어로 입력언어 변경
+    kakao_menu_output_options.forEach(kakao_menu_output_option => {
+        if (kakao_menu_output_option.value === kakao_menu_input_select_value) {
+            kakao_menu_output_option.setAttribute('selected', 'selected');
+        } else {
+            kakao_menu_output_option.removeAttribute('selected');
+        }
+    });
+
+    exceptCurrentOption();
 }
