@@ -1,0 +1,33 @@
+.chatbot_search_category {
+    margin: 10px;
+}
+
+.chatbot_menu_select {
+    margin: 10px;
+}
+
+.chatbot_util_img {
+    margin-right: 5px;
+    width: 50px;
+    height: 20px;
+}
+
+.chatbot_menu_input {
+    width: 220px;
+    height: 50px;
+    font-size: 10pt;
+    margin: 10px;
+    margin-bottom: -5px;
+}
+
+.chatbot_confirm_button {
+
+}
+
+.chatbot_request_text {
+    
+}
+
+.chatbot_response_text {
+    color:yellow;
+}

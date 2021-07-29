@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/static/static.css">
+    <link rel="stylesheet" href="/css/chatbot/chatbot.css">  
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/resources/auth/properties.js"></script>
+    <script src="/js/static/static.js"></script>
+    <script src="/js/chatbot/chatbot.js"></script> 
+    <title>Chat bot</title>
+</head>
+<body>
+    <header include-html="/html/static/header.html"></header>
+    <nav include-html="/html/static/nav.html"></nav>
+    <main>
+        <div class="chatbot_search_div">
+            <div class="chatbot_search_category">
+                <label class="chatbot_menu_select" for="chatbot_menu_select">메뉴
+                    <select name="chatbot_menu_select" id="chatbot_menu_select" onchange="setSelectedMenu();">
+                        <option value="00">선택</option>
+                        <option value="01">심심이</option>
+                        <option value="02">other</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="chatbot_result_div">
+            
+        </div>
+    </main>
+    <footer include-html="/html/static/footer.html"></footer>
+</body>
+<script>
+    includeHTML();
+</script>
+</html>
